@@ -1,0 +1,3 @@
+[submodule "django-robo-cjk"]
+	path = django-robo-cjk
+	url = https://github.com/NightFurySL2001/django-robo-cjk

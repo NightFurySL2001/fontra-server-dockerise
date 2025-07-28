@@ -1,0 +1,48 @@
+FROM python:3.11-alpine
+
+# 中国镜像
+# RUN set -eux && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+# RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+
+ARG ROBOCJK_HOST=0.0.0.0
+ARG ROBOCJK_PORT=8000
+ENV ROBOCJK_HOST=${ROBOCJK_HOST}
+ENV ROBOCJK_PORT=${ROBOCJK_PORT}
+
+RUN apk update \
+    && apk --no-cache add git \
+    && apk --no-cache add openssh \
+    && pip install --upgrade pip
+
+# configure ssh for git commit
+RUN adduser -D user && \
+    mkdir -p /home/user/.ssh && \
+    chown -R user:user /home/user/.ssh && \
+    echo -e "Host *.github.com\n\tStrictHostKeyChecking no\n" >> /home/user/.ssh/config
+
+WORKDIR /var/lib/server
+
+COPY django-robo-cjk/requirements.txt requirements.txt
+
+RUN pip install -r requirements.txt \
+    && mkdir ../conf && touch ../conf/env_settings
+
+COPY django-robo-cjk .
+
+# making directory for admin panels, cache, logs, and git repository (.rcjks)
+RUN mkdir -p /var/lib/robocjk/public/media \
+    && mkdir -p /var/lib/robocjk/public/static \
+    && mkdir -p /var/lib/cache \
+    && mkdir -p /var/lib/logs \
+    && mkdir -p /var/lib/.rcjks
+
+# copy over for secret_key and other django settings
+COPY robocjk-settings ../conf/env_settings
+
+RUN python manage.py check
+RUN python manage.py collectstatic --noinput
+
+VOLUME ["/var/lib/conf/env_settings"]
+EXPOSE 8000
+
+CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver ${ROBOCJK_HOST}:${ROBOCJK_PORT}"]

@@ -1,0 +1,30 @@
+FROM python:3.11-alpine
+
+ARG FONTRA_HOST=0.0.0.0
+ARG FONTRA_PORT=8000
+ENV FONTRA_HOST ${FONTRA_HOST}
+ENV FONTRA_PORT ${FONTRA_PORT}
+
+RUN apk update \
+    && apk add git \
+    && pip install --upgrade pip
+
+RUN apk add npm
+
+RUN git clone https://github.com/googlefonts/fontra --depth 1 \
+    && cd fontra \
+    && pip install -r requirements.txt \
+    && pip install -e . \
+    && mkdir -p /var/lib/fontra
+
+RUN cd .. && git clone https://github.com/googlefonts/fontra-rcjk --depth 1 \
+    && cd fontra-rcjk \
+    && pip install -r requirements.txt \
+    && pip install -e .
+
+WORKDIR /var/lib/fontra
+EXPOSE 8000
+VOLUME /var/lib/fontra
+
+# CMD fontra --host ${FONTRA_HOST} --http-port ${FONTRA_PORT} --launch filesystem /var/lib/fontra
+CMD fontra --host ${FONTRA_HOST} --http-port ${FONTRA_PORT} --launch rcjk nginx

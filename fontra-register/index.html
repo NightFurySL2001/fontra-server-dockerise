@@ -1,0 +1,131 @@
+<head>
+    <link href="/css/core.css" rel="stylesheet" />
+    <link href="/rcjk/landing.css" rel="stylesheet" />
+    <title>Fontra Register</title>
+    <style>
+        form#login-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 10 auto;
+            gap: 0.25em;
+            font-size: 12pt;
+        }
+        input {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body class="landing-body">
+    <div class="landing-content">
+        <div class="container">
+            <form id="login-form" class="login-form">
+                <label for="username" class="login-label"
+                    >Username</label
+                >
+                <div class="col-sm-10">
+                    <input
+                        type="text"
+                        name="username"
+                        class="login-input"
+                        placeholder="Username"
+                        required
+                    />
+                </div>
+                <label for="first-name" class="login-label"
+                    >First Name</label
+                >
+                <div class="col-sm-10">
+                    <input
+                        type="text"
+                        name="first-name"
+                        class="login-input"
+                        placeholder="First Name"
+                        required
+                    />
+                </div>
+                <label for="last-name" class="login-label">Last Name</label>
+                <div class="col-sm-10">
+                    <input
+                        type="text"
+                        name="last-name"
+                        class="login-input"
+                        placeholder="Last Name"
+                        required
+                    />
+                </div>
+                <label for="email" class="login-label">Email</label>
+                <div class="col-sm-10">
+                    <input
+                        type="text"
+                        name="email"
+                        class="login-input"
+                        placeholder="Email"
+                        required
+                    />
+                </div>
+                <label for="password" class="login-label">Password</label>
+                <div class="col-sm-10">
+                    <input
+                        type="password"
+                        name="password"
+                        class="login-input"
+                        placeholder="Password"
+                        required
+                    />
+                </div>
+                <label for="password_confirmation" class="login-label"
+                    >Confirm Password</label
+                >
+                <div class="col-sm-10">
+                    <input
+                        type="password"
+                        name="password_confirmation"
+                        class="login-input"
+                        placeholder="Confirm Password"
+                        required
+                    />
+                </div>
+                <label for="invitation" class="login-label"
+                    >Invitation Key</label
+                >
+                <div class="col-sm-10">
+                    <input
+                        type="text"
+                        name="invitation"
+                        class="login-input"
+                        placeholder="Invitation Key"
+                        required
+                    />
+                </div>
+                <button type="submit" class="login-button">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var api_url = "./submit";
+
+        document
+            .getElementById("login-form")
+            .addEventListener("submit", function (e) {
+                e.preventDefault();
+                var data = new FormData(this);
+                fetch(api_url, {
+                    method: "POST",
+                    body: data,
+                })
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        if (data.status === "success") {
+                            alert("Successfully registered");
+                            location.href = "/";
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+            });
+    </script>
+</body>

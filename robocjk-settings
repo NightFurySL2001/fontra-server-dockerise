@@ -1,0 +1,56 @@
+# django admin properties used for sending error emails
+ADMIN_NAME=""
+ADMIN_EMAIL=""
+
+# django allowed hosts (separated by comma)
+ALLOWED_HOSTS=""
+
+# django database
+#DATABASE_ENGINE="django.db.backends.postgresql"
+DATABASE_ENGINE="django.db.backends.mysql"
+DATABASE_NAME="robocjk"
+DATABASE_USER="robocjk"
+DATABASE_PASSWORD=""
+DATABASE_HOST="db"
+DATABASE_PORT="3306"
+
+# django debug
+DEBUG=True
+DEBUG_TOOLBAR_SHOW=True
+
+# django email
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_HOST_USER=""
+EMAIL_HOST_PASSWORD=""
+
+# git settings
+GIT_REPOSITORIES_PATH="/var/lib/.rcjks" # match Dockerfile.server
+GIT_USER_EMAIL=""
+GIT_USER_NAME=""
+
+# hashids settings - https://pypi.org/project/hashids/
+HASHIDS_SALT=""
+
+# jwt settings - https://pypi.org/project/jwt/
+JWT_SECRET=""
+
+# django media and static files
+MEDIA_ROOT="/var/lib/robocjk/public/media/" # match Dockerfile.server
+STATIC_ROOT="/var/lib/robocjk/public/static/" # match Dockerfile.server
+
+# export options
+ROBOCJK_EXPORT_CANCEL_TIMEOUT=120
+ROBOCJK_EXPORT_QUERIES_PAGINATION_LIMIT=500
+
+# django secret key
+SECRET_KEY=""
+
+# sentry
+USE_SENTRY=0
+SENTRY_DSN=""
+SENTRY_ENVIRONMENT=""
+
+# api testing
+TEST_API_HOST=""
+TEST_API_USERNAME=""
+TEST_API_PASSWORD=""
