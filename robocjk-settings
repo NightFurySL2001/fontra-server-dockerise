@@ -4,6 +4,7 @@ ADMIN_EMAIL=""
 
 # django allowed hosts (separated by comma)
 ALLOWED_HOSTS=""
+CSRF_TRUSTED_ORIGINS="https://localhost"
 
 # django database
 #DATABASE_ENGINE="django.db.backends.postgresql"
@@ -43,7 +44,7 @@ ROBOCJK_EXPORT_CANCEL_TIMEOUT=120
 ROBOCJK_EXPORT_QUERIES_PAGINATION_LIMIT=500
 
 # django secret key
-SECRET_KEY=""
+SECRET_KEY="fdsfsdsfdfsd"
 
 # sentry
 USE_SENTRY=0
